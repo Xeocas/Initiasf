@@ -1,0 +1,10 @@
+name: InitiaSlimefun
+version: '1.0.0'
+main: Xeocas.Initiasf
+depend: [Slimefun]
+softdepend: [WeaponMechanics]
+api-version: '1.20'
+load: STARTUP
+authors: [ Xeocas ]
+description: Slimefun Plugin For Initia!
+
