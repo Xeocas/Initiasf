@@ -60,20 +60,6 @@
       <scope>system</scope>
       <systemPath>C:/Users/lucas/Desktop/Slimefun4-Dev.jar</systemPath>
     </dependency>
-    <dependency>
-      <groupId>com.cjcrafter</groupId>
-      <artifactId>weaponmechanics</artifactId>
-      <version>3.4.12</version>
-      <scope>system</scope>
-      <systemPath>C:/Users/lucas/Desktop/WeaponMechanics-3.4.12.jar</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>com.cjcrafter</groupId>
-      <artifactId>mechanicscore</artifactId>
-      <version>3.4.11</version>
-      <scope>system</scope>
-      <systemPath>C:/Users/lucas/Desktop/MechanicsCore-3.4.11.jar</systemPath>
-    </dependency>
   </dependencies>
   <properties>
     <java.version>21</java.version>

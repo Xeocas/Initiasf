@@ -1,82 +1,69 @@
 package Xeocas;
 
-import Xeocas.Weapons.KarMachine;
+import Xeocas.Weapons.*;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import me.deecaad.weaponmechanics.WeaponMechanics;
-import me.deecaad.weaponmechanics.weapon.WeaponHandler;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public final class Initiasf extends JavaPlugin implements SlimefunAddon {
 
-
 	@Override
 	public void onEnable() {
-
-		Plugin weaponMechanicsPlugin = getServer().getPluginManager().getPlugin("WeaponMechanics");
-		if (weaponMechanicsPlugin == null) {
-			getLogger().warning("WeaponMechanics plugin is not found.");
-		} else {
-			getLogger().info("WeaponMechanics plugin found: " + weaponMechanicsPlugin.getDescription().getVersion());
-		}
-		getLogger().info("Plugin enabled!");
-
-		// Initialize WeaponSetup and retry logic for WeaponMechanics
-
-		// Delay the WeaponMechanics setup to ensure the plugin is fully loaded
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				WeaponHandler weaponHandler = WeaponMechanics.getWeaponHandler();
-				// Initialize KarMachine only after WeaponSetup completes
-			}
-		}.runTaskLater(this, 200L); // Delay by 10 seconds
-
 		// Delay initialization of Slimefun components to ensure Slimefun is fully loaded
 		getServer().getScheduler().runTaskLater(this, () -> {
 			try {
 				// Define the ItemGroup for weapon machines
 				NamespacedKey weaponMachineCategoryId = new NamespacedKey(this, "weaponmachine_category");
 				ItemStack weaponMachineCategoryItem = new ItemStack(Material.DIAMOND_BLOCK); // Use Diamond Block as the category icon
-
-				// Create and register the ItemGroup for weapon machines
 				ItemGroup weaponMachineGroup = new ItemGroup(weaponMachineCategoryId, weaponMachineCategoryItem);
 
-				// Define the SlimefunItemStack for the KarMachine
-				SlimefunItemStack karMachineStack = new SlimefunItemStack("KAR98_FACTORY", Material.FURNACE, "&7Kar98 Factory");
+				// Define the SlimefunItemStack for the ArtilleryAmmoMachine
+				SlimefunItemStack artilleryAmmoMachineStack = new SlimefunItemStack("ARTILLERY_AMMO_MACHINE", Material.FURNACE, "&7Artillery Ammo Machine");
+				SlimefunItemStack antiairAmmoMachineStack = new SlimefunItemStack("ANTIAIR_AMMO_MACHINE", Material.FURNACE, "&7Anti-Air Ammo Machine");
+				SlimefunItemStack onefiveNavalAmmoMachineStack = new SlimefunItemStack("ONEFIVE_AMMO_MACHINE", Material.FURNACE, "&7Fifteen Inch Ammo Machine");
+				SlimefunItemStack onethreeNavalAmmoMachineStack = new SlimefunItemStack("ONETHREE_AMMO_MACHINE", Material.FURNACE, "&7Thirteen Inch Ammo Machine");
+				SlimefunItemStack onetwoNavalAmmoMachineStack = new SlimefunItemStack("ONETWO_AMMO_MACHINE", Material.FURNACE, "&7Twelve Inch Ammo Machine");
+				SlimefunItemStack steelMachineStack = new SlimefunItemStack("STEEL_MACHINE", Material.FURNACE, "&7Steel Machine");
+				SlimefunItemStack tankAmmoMachineStack = new SlimefunItemStack("TANK_AMMO_MACHINE", Material.FURNACE, "&7Tank Ammo Machine");
 
-				// Create the KarMachine instance and retrieve its recipe
-				KarMachine karMachineInstance = new KarMachine(weaponMachineGroup, karMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, this);
-				ItemStack[] karMachineRecipe = karMachineInstance.getKarMachineRecipe(); // Use instance to get the recipe
 
-				// Validate the recipe
-				if (karMachineRecipe == null || karMachineRecipe.length == 0) {
-					getLogger().severe("KarMachine recipe is not properly defined.");
-					return;
-				}
+				// Create the ArtilleryAmmoMachine instance
+				ArtilleryAmmoMachine artilleryAmmoMachine = new ArtilleryAmmoMachine(weaponMachineGroup, artilleryAmmoMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, this);
+				AntiAirAmmoMachine antiAirAmmoMachine = new AntiAirAmmoMachine(weaponMachineGroup, antiairAmmoMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, this);
+				onefiveNavalAmmoMachine OnefiveNavalAmmoMachine = new onefiveNavalAmmoMachine(weaponMachineGroup, onefiveNavalAmmoMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, this);
+				onethreeNavalAmmoMachine OnethreeNavalAmmoMachine = new onethreeNavalAmmoMachine(weaponMachineGroup, onethreeNavalAmmoMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, this);
+				onetwoNavalAmmoMachine OnetwoNavalAmmoMachine = new onetwoNavalAmmoMachine(weaponMachineGroup, onetwoNavalAmmoMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, this);
+				SteelMachine steelMachine = new SteelMachine(weaponMachineGroup, steelMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, this);
+				TankAmmoMachine tankAmmoMachine = new TankAmmoMachine(weaponMachineGroup, tankAmmoMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, this);
 
-				// Register the KarMachine
-				karMachineInstance.register(this);
 
-				getLogger().info("Kar98 Factory registered in the weapon machine category.");
+
+				// Register the ArtilleryAmmoMachine
+				artilleryAmmoMachine.register(this);
+				antiAirAmmoMachine.register(this);
+				OnefiveNavalAmmoMachine.register(this);
+				OnethreeNavalAmmoMachine.register(this);
+				OnetwoNavalAmmoMachine.register(this);
+				steelMachine.register(this);
+				tankAmmoMachine.register(this);
+
+
+				// If necessary, you can also add recipes here for additional configurations
+				// e.g., SlimefunItems.addRecipe(artilleryAmmoMachineStack, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
+
+				getLogger().info("ArtilleryAmmoMachine registered.");
 			} catch (Exception e) {
-				getLogger().severe("An error occurred during plugin initialization:");
 				e.printStackTrace(); // Print the error stack trace for debugging
 			}
 		}, 20L); // Delay by 1 second (20 ticks)
 
 		getLogger().info("Initializing plugin...");
 	}
-
 
 	@Override
 	public void onDisable() {
